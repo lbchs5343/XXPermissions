@@ -29,6 +29,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: app-release
-        path: app/build/outputs/apk/release/app-release.apk # 确保路径正确
-    - name: Debug - List APK directory
-      run: ls -R
+        path: build/app/outputs/apk/release/XXPermissions.apk # 确保路径正确
+    
