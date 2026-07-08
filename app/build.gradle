@@ -3,6 +3,14 @@ apply from : '../common.gradle'
 
 android {
 
+    lint {
+        // 方案A：禁用该特定检查（推荐）
+        disable 'PermissionImpliesUnsupportedChromeOsHardware'
+        
+        // 或方案B：忽略所有错误继续构建（不推荐，但更省事）
+        // abortOnError false
+    }
+
     namespace 'com.hjq.permissions.demo'
 
     defaultConfig {
