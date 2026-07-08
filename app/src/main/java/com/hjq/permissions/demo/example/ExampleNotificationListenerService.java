@@ -7,7 +7,7 @@ import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
 import com.hjq.permissions.demo.R;
-
+import com.hjq.toast.Toaster;
 /**
  *    author : Android 轮子哥
  *    github : https://github.com/getActivity/XXPermissions
