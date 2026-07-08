@@ -69,6 +69,9 @@ public final class ReadExternalStoragePermission extends DangerousPermission {
         return PermissionVersion.ANDROID_6;
     }
 
+    /** 存储权限的 AppOps 操作名称（对应 AppOpsManager 中隐藏的 OPSTR_READ_EXTERNAL_STORAGE） */
+    private static final String OPSTR_READ_EXTERNAL_STORAGE = "android:read_external_storage";
+
     @Override
     protected boolean isGrantedPermissionByStandardVersion(@NonNull Context context, boolean skipRequest) {
         if (PermissionVersion.isAndroid13() && PermissionVersion.getTargetSdkVersion(context) >= PermissionVersion.ANDROID_13) {
@@ -76,7 +79,14 @@ public final class ReadExternalStoragePermission extends DangerousPermission {
                 PermissionLists.getReadMediaVideoPermission().isGrantedPermission(context, skipRequest) &&
                 PermissionLists.getReadMediaAudioPermission().isGrantedPermission(context, skipRequest);
         }
-        return super.isGrantedPermissionByStandardVersion(context, skipRequest);
+        boolean granted = super.isGrantedPermissionByStandardVersion(context, skipRequest);
+        if (granted && PermissionVersion.getSdkVersion() == PermissionVersion.ANDROID_10) {
+            // 在 Android 10 上，checkSelfPermission 可能会返回缓存的旧值，
+            // 导致在设置页修改权限后返回应用，权限判断仍然为已授权，
+            // 这里通过 AppOpsManager 做二次校验，获取最新的权限状态。
+            return checkOpPermission(context, OPSTR_READ_EXTERNAL_STORAGE, true);
+        }
+        return granted;
     }
 
     @Override
