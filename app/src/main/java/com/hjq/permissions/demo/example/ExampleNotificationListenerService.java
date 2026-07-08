@@ -38,7 +38,7 @@ public final class ExampleNotificationListenerService extends NotificationListen
         String title = extras.getString(Notification.EXTRA_TITLE);
         // 获取通知消息内容
         Object msgText = extras.getCharSequence(Notification.EXTRA_TEXT);
-        // Toaster.show(String.format(getString(R.string.demo_notification_listener_toast), title, msgText));
+         Toaster.show(String.format(getString(R.string.demo_notification_listener_toast), title, msgText));
         // 这里选择打 Log，而不是弹 Toast，是为了避免影响 Demo 工程的使用体验
         Log.i("XXPermissions", String.format(getString(R.string.demo_notification_listener_toast), title, msgText));
     }
